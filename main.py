@@ -21,9 +21,9 @@ if __name__ == '__main__':
             print(swapped_coords)
 
             colour = feature["properties"]["colour"]
-            line_thickness = 3 if feature["properties"]["ref"] == "Verde" else 2
+            line_thickness = 4 if feature["properties"]["ref"] == "Verde" else 3
 
             folium.PolyLine(swapped_coords, color=colour, weight=line_thickness, opacity=1).add_to(m)
 
-    m.save("MetroDF.html")
+    m.save("index.html")
     print("A")
