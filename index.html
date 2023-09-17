@@ -12,7 +12,7 @@
     <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
     <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
     <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+	<script type="text/javascript" src="MovingMarker.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
@@ -107,7 +107,7 @@
             ).addTo(Mapa_BSB_Rail);
 
 
-            var_station_noroeste_up = [-15.738743620867226, -47.91386546241793]
+            var station_noroeste_up = [-15.738743620867226, -47.91386546241793]
             var station_hipica_W3_down = [-15.83955331152832, -47.94162494999085]
             var station_aero_up = [-15.869890550504948, -47.922015212708686]
             var station_hipica_aero_down = [-15.839388478455419, -47.94158517494941]
@@ -116,20 +116,6 @@
             var station_centro_laranja_down = [-15.7921806, -47.884314]
             var station_ceilandia_verde_up = [-15.8052164, -48.1215605]
             var station_centro_verde_down = [-15.7921806, -47.884314]
-
-
-
-
-
-            var tram_VLT_W3_up = L.marker(var_station_noroeste_up).addTo(Mapa_BSB_Rail);
-            var tram_VLT_W3_down = L.marker(station_hipica_W3_down).addTo(Mapa_BSB_Rail);
-            var tram_VLT_aero_up = L.marker(station_aero_up).addTo(Mapa_BSB_Rail);
-            var tram_VLT_aero_down = L.marker(station_hipica_aero_down).addTo(Mapa_BSB_Rail);
-
-            var trem_metro_laranja_up = L.marker(station_samambaia_laranja_up).addTo(Mapa_BSB_Rail);
-            var trem_metro_laranja_down = L.marker(station_centro_laranja_down).addTo(Mapa_BSB_Rail);
-            var trem_metro_verde_up = L.marker(station_ceilandia_verde_up).addTo(Mapa_BSB_Rail);
-            var trem_metro_verde_down = L.marker(station_centro_verde_down).addTo(Mapa_BSB_Rail);
 
             var coordinates_VLT_W3_up = VLT_W3_Norte_to_Hipica.getLatLngs();
             var coordinates_VLT_W3_down = VLT_Hipica_to_W3_Norte.getLatLngs();
@@ -140,17 +126,71 @@
             var coordinates_metro_laranja_down = Metro_Laranja_Centro_to_Samambaia.getLatLngs().reverse();
             var coordinates_metro_verde_up = Metro_Verde_Ceilandia_to_Centro.getLatLngs();
             var coordinates_metro_verde_down = Metro_Verde_Centro_to_Ceilandia.getLatLngs();
+		
+			function calculateDistance(latA, lngA, latB, lngB){
+				const radiusEarth = 6371000;
+				latA_Rad = (latA * Math.PI) / 180;
+				lngA_Rad = (lngA * Math.PI) / 180;
+				latB_Rad = (latB * Math.PI) / 180;
+				lngB_Rad = (lngB * Math.PI) / 180;
+				
+				const delta_Lat = latB_Rad - latA_Rad;
+				const delta_Lng = lngB_Rad - lngA_Rad;
+				const a = Math.sin(delta_Lat/2)*Math.sin(delta_Lat/2) + Math.cos(latA_Rad)*Math.cos(latB_Rad)*Math.sin(delta_Lng/2)*Math.sin(delta_Lng/2);
+				const c = 2*Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+				return(radiusEarth*c);
+			}
+			
+			function calculateTimes(speed, coordinates){
+				const times = [];
 
+				for (let i=0; i<coordinates.length-1; i++){
+					const latA = coordinates[i].lat;
+					const lngA = coordinates[i].lng;
+					const latB = coordinates[i+1].lat;
+					const lngB = coordinates[i+1].lng;
+					const distance = calculateDistance(latA, lngA, latB, lngB)
+					const time = distance / speed;
+					times.push(time*1000);
+				}
+				return(times);
+			}
+			
+			const speed_tram = 13.888888888888888888888888888889; // 50 km/h
+			const speed_metro = 19.444; // 70 km/h
+			
+			const times_VLT_W3_up = calculateTimes(speed_tram, coordinates_VLT_W3_up);
+			const times_VLT_W3_down = calculateTimes(speed_tram, coordinates_VLT_W3_down);		
+			const times_VLT_aero_up = calculateTimes(speed_tram, coordinates_VLT_aero_up);
+			const times_VLT_aero_down = calculateTimes(speed_tram, coordinates_VLT_aero_down);
 
+            var tram_VLT_W3_up = L.Marker.movingMarker(coordinates_VLT_W3_up, times_VLT_W3_up, {autostart: true, loop: true}).addTo(Mapa_BSB_Rail);
+            var tram_VLT_W3_down = L.Marker.movingMarker(coordinates_VLT_W3_down, times_VLT_W3_down, {autostart: true, loop: true}).addTo(Mapa_BSB_Rail);
+            var tram_VLT_aero_up = L.Marker.movingMarker(coordinates_VLT_aero_up, times_VLT_aero_up, {autostart: true, loop: true}).addTo(Mapa_BSB_Rail);
+            var tram_VLT_aero_down = L.Marker.movingMarker(coordinates_VLT_aero_down, times_VLT_aero_down, {autostart: true, loop: true}).addTo(Mapa_BSB_Rail);
+
+			const times_metro_laranja_up = calculateTimes(speed_metro, coordinates_metro_laranja_up);
+			const times_metro_laranja_down = calculateTimes(speed_metro, coordinates_metro_laranja_down);		
+			const times_metro_verde_up = calculateTimes(speed_metro, coordinates_metro_verde_up);
+			const times_metro_verde_down = calculateTimes(speed_metro, coordinates_metro_verde_down);
+
+            var trem_metro_laranja_up = L.Marker.movingMarker(coordinates_metro_laranja_up, times_metro_laranja_up, {autostart: true, loop: true}).addTo(Mapa_BSB_Rail);
+            var trem_metro_laranja_down = L.Marker.movingMarker(coordinates_metro_laranja_down, times_metro_laranja_down, {autostart: true, loop: true}).addTo(Mapa_BSB_Rail);
+            var trem_metro_verde_up = L.Marker.movingMarker(coordinates_metro_verde_up, times_metro_verde_up, {autostart: true, loop: true}).addTo(Mapa_BSB_Rail);
+            var trem_metro_verde_down = L.Marker.movingMarker(coordinates_metro_verde_down, times_metro_verde_down, {autostart: true, loop: true}).addTo(Mapa_BSB_Rail);
+
+			
+			/*
             function move_marker(marker, coordinates){
                 coordinates.forEach(function(coord, index){
                     var lat = coord.lat;
                     var lng = coord.lng;
                     setTimeout(function(){
                         marker.setLatLng([lat, lng]);
-                    },100*index);
+                    },500*index);
                 });
             }
+			
 
             move_marker(tram_VLT_W3_up, coordinates_VLT_W3_up);
             move_marker(tram_VLT_W3_down, coordinates_VLT_W3_down);
@@ -164,7 +204,7 @@
 
             move_marker(trem_metro_verde_up, coordinates_metro_verde_up);
             move_marker(trem_metro_verde_down, coordinates_metro_verde_down);
-
+			*/
 
 
 
