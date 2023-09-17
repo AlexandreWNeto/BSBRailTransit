@@ -119,8 +119,8 @@
 				return(times);
 			}
 			
-			const speed_tram = 13.888888888888888888888888888889; // 50 km/h
-			const speed_metro = 19.444; // 70 km/h
+			const speed_tram = 138.8; //13.888; // 50 km/h
+			const speed_metro = 194.4; //19.444; // 70 km/h
 			
 			const times_VLT_W3_up = calculateTimes(speed_tram, coordinates_VLT_W3_up);
 			const times_VLT_W3_down = calculateTimes(speed_tram, coordinates_VLT_W3_down);		
@@ -138,7 +138,7 @@
 			const times_metro_verde_down = calculateTimes(speed_metro, coordinates_metro_verde_down);
 
             var trem_metro_laranja_up = L.Marker.movingMarker(coordinates_metro_laranja_up, times_metro_laranja_up, {autostart: true, loop: true, icon: metroIcon}).addTo(Mapa_BSB_Rail);
-            var trem_metro_laranja_down = L.Marker.movingMarker(coordinates_metro_laranja_down, times_metro_laranja_down, {autostart: true, loop: true, icon: metroIcon}).addTo(Mapa_BSB_Rail);
+            var trem_metro_laranja_down = L.Marker.movingMarker(coordinates_metro_laranja_down, times_metro_laranja_down, {loop: true, icon: metroIcon}).addTo(Mapa_BSB_Rail);
             var trem_metro_verde_up = L.Marker.movingMarker(coordinates_metro_verde_up, times_metro_verde_up, {autostart: true, loop: true, icon: metroIcon}).addTo(Mapa_BSB_Rail);
             var trem_metro_verde_down = L.Marker.movingMarker(coordinates_metro_verde_down, times_metro_verde_down, {autostart: true, loop: true, icon: metroIcon}).addTo(Mapa_BSB_Rail);
 
@@ -150,4 +150,9 @@
 			trem_metro_laranja_up.bindTooltip("Metrô: Samambaia → Central",{direction: "auto"});
 			trem_metro_laranja_down.bindTooltip("Metrô: Central → Samambaia",{direction: "auto"});
 			trem_metro_verde_up.bindTooltip("Metrô: Ceilândia → Central",{direction: "auto"});
-			trem_metro_verde_down.bindTooltip("VLT: Central → Ceilândia",{direction: "auto"});			
+			trem_metro_verde_down.bindTooltip("Metrô: Central → Ceilândia",{direction: "auto"});	
+
+
+			setTimeout(function(){
+				trem_metro_laranja_down.start()
+			}, 12000); 
