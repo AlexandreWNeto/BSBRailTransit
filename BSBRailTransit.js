@@ -191,12 +191,12 @@
 					setTimeout(function(){
 							trem_metro_verde_up[i] = L.Marker.movingMarker(coordinates_metro_verde_up, times_metro_verde_up, {loop: true, icon: metroIcon}).addTo(Mapa_BSB_Rail);
 							trem_metro_verde_up[i].start()
-							trem_metro_verde_up[i].bindTooltip("Metrô: Ceilândia → Central"+i,{direction: "auto"});	
+							trem_metro_verde_up[i].bindTooltip("Metrô: Ceilândia → Central",{direction: "auto"});	
 					}, 16964*i);
 					setTimeout(function(){
 							trem_metro_verde_down[i] = L.Marker.movingMarker(coordinates_metro_verde_down, times_metro_verde_down, {loop: true, icon: metroIcon}).addTo(Mapa_BSB_Rail);
 							trem_metro_verde_down[i].start()
-							trem_metro_verde_down[i].bindTooltip("Metrô: Central → Ceilândia"+i,{direction: "auto"});		
+							trem_metro_verde_down[i].bindTooltip("Metrô: Central → Ceilândia",{direction: "auto"});		
 					}, 16974*i);
 				}
 			}
@@ -206,12 +206,12 @@
 				setTimeout(function(){
 						trem_metro_laranja_up = L.Marker.movingMarker(coordinates_metro_laranja_up, times_metro_laranja_up, {loop: true, icon: metroIcon}).addTo(Mapa_BSB_Rail);
 						trem_metro_laranja_up.start();
-						trem_metro_laranja_up.bindTooltip("Metrô: Samambaia → Central"+(i),{direction: "auto"});
+						trem_metro_laranja_up.bindTooltip("Metrô: Samambaia → Central",{direction: "auto"});
 				}, 50893*i+62168);	
 				setTimeout(function(){
 						trem_metro_laranja_down[i] = L.Marker.movingMarker(coordinates_metro_laranja_down, times_metro_laranja_down, {loop: true, icon: metroIcon}).addTo(Mapa_BSB_Rail);
 						trem_metro_laranja_down[i].start();
-						trem_metro_laranja_down[i].bindTooltip("Metrô: Central → Samambaia"+(i),{direction: "auto"});				
+						trem_metro_laranja_down[i].bindTooltip("Metrô: Central → Samambaia",{direction: "auto"});				
 				}, 50923*i+33949);
 			}
 			
