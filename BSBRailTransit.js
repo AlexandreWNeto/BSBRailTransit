@@ -206,7 +206,7 @@
 						trem_metro_laranja_up = L.Marker.movingMarker(coordinates_metro_laranja_up, times_metro_laranja_up, {loop: true, icon: metroIcon}).addTo(Mapa_BSB_Rail);
 						trem_metro_laranja_up.start();
 						trem_metro_laranja_up.bindTooltip("Metrô: Samambaia → Central",{direction: "auto"});
-				}, 50893*i+33929);	
+				}, 50893*i+62168);	
 				setTimeout(function(){
 						trem_metro_laranja_down[i] = L.Marker.movingMarker(coordinates_metro_laranja_down, times_metro_laranja_down, {loop: true, icon: metroIcon}).addTo(Mapa_BSB_Rail);
 						trem_metro_laranja_down[i].start();
