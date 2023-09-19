@@ -126,16 +126,74 @@
 			const times_VLT_W3_down = calculateTimes(speed_tram, coordinates_VLT_W3_down);		
 			const times_VLT_aero_up = calculateTimes(speed_tram, coordinates_VLT_aero_up);
 			const times_VLT_aero_down = calculateTimes(speed_tram, coordinates_VLT_aero_down);
-
-            var tram_VLT_W3_up = L.Marker.movingMarker(coordinates_VLT_W3_up, times_VLT_W3_up, {autostart: true, loop: true, icon: tramIcon}).addTo(Mapa_BSB_Rail);
-            var tram_VLT_W3_down = L.Marker.movingMarker(coordinates_VLT_W3_down, times_VLT_W3_down, {autostart: true, loop: true, icon: tramIcon}).addTo(Mapa_BSB_Rail);
-            var tram_VLT_aero_up = L.Marker.movingMarker(coordinates_VLT_aero_up, times_VLT_aero_up, {autostart: true, loop: true, icon: tramIcon}).addTo(Mapa_BSB_Rail);
-            var tram_VLT_aero_down = L.Marker.movingMarker(coordinates_VLT_aero_down, times_VLT_aero_down, {autostart: true, loop: true, icon: tramIcon}).addTo(Mapa_BSB_Rail);
-
+			
 			const times_metro_laranja_up = calculateTimes(speed_metro, coordinates_metro_laranja_up);
 			const times_metro_laranja_down = calculateTimes(speed_metro, coordinates_metro_laranja_down);		
 			const times_metro_verde_up = calculateTimes(speed_metro, coordinates_metro_verde_up);
 			const times_metro_verde_down = calculateTimes(speed_metro, coordinates_metro_verde_down);
+
+			var tram_VLT_W3_up = []
+			var tram_VLT_W3_down = []
+			var tram_VLT_aero_up = []
+			var tram_VLT_aero_down = []
+			var trem_metro_verde_up = []
+			var trem_metro_verde_down = []
+			var trem_metro_laranja_up = []
+			var trem_metro_laranja_down = []
+			
+			for (let i=0; i<4; i++){
+				setTimeout(function(){
+				tram_VLT_W3_up[i] = L.Marker.movingMarker(coordinates_VLT_W3_up, times_VLT_W3_up, {loop: true, icon: tramIcon}).addTo(Mapa_BSB_Rail);
+				tram_VLT_W3_up[i].start();
+				tram_VLT_W3_up[i].bindTooltip("VLT: Terminal Asa Norte → Terminal Asa Sul",{direction: "auto"});
+				
+				tram_VLT_W3_down[i] = L.Marker.movingMarker(coordinates_VLT_W3_down, times_VLT_W3_down, {loop: true, icon: tramIcon}).addTo(Mapa_BSB_Rail);
+				tram_VLT_W3_down[i].start();
+				tram_VLT_W3_down[i].bindTooltip("VLT: Terminal Asa Sul → Terminal Asa Norte",{direction: "auto"});					
+				}, 30000*i);
+			}
+			
+			for (let i=0; i<2; i++){
+				setTimeout(function(){
+					tram_VLT_aero_up[i] = L.Marker.movingMarker(coordinates_VLT_aero_up, times_VLT_aero_up, {loop: true, icon: tramIcon}).addTo(Mapa_BSB_Rail);
+					tram_VLT_aero_up[i].start()
+					tram_VLT_aero_up[i].bindTooltip("VLT: Aeroporto → Terminal Asa Sul",{direction: "auto"});
+
+					tram_VLT_aero_down[i] = L.Marker.movingMarker(coordinates_VLT_aero_down, times_VLT_aero_down, {loop: true, icon: tramIcon}).addTo(Mapa_BSB_Rail);
+					tram_VLT_aero_down[i].start()
+					tram_VLT_aero_down[i].bindTooltip("VLT: Terminal Asa Sul → Aeroporto",{direction: "auto"});
+				}, 60000*i);
+			}
+			
+			
+			for (let i=0; i<8; i++){
+				setTimeout(function(){
+					if ((i+1)%3 != 0){
+						trem_metro_verde_up[i] = L.Marker.movingMarker(coordinates_metro_verde_up, times_metro_verde_up, {loop: true, icon: metroIcon}).addTo(Mapa_BSB_Rail);
+						trem_metro_verde_up[i].start()
+						trem_metro_verde_up[i].bindTooltip("Metrô: Ceilândia → Central",{direction: "auto"});
+
+						trem_metro_verde_down[i] = L.Marker.movingMarker(coordinates_metro_verde_down, times_metro_verde_down, {loop: true, icon: metroIcon}).addTo(Mapa_BSB_Rail);
+						trem_metro_verde_down[i].start()
+						trem_metro_verde_down[i].bindTooltip("Metrô: Central → Ceilândia",{direction: "auto"});	
+					} else {
+						trem_metro_laranja_up = L.Marker.movingMarker(coordinates_metro_laranja_up, times_metro_laranja_up, {loop: true, icon: metroIcon}).addTo(Mapa_BSB_Rail);
+						trem_metro_laranja_up.start();
+						trem_metro_laranja_up.bindTooltip("Metrô: Samambaia → Central",{direction: "auto"});
+						
+						trem_metro_laranja_down[i] = L.Marker.movingMarker(coordinates_metro_laranja_down, times_metro_laranja_down, {loop: true, icon: metroIcon}).addTo(Mapa_BSB_Rail);
+						trem_metro_laranja_down[i].start();
+						trem_metro_laranja_down[i].bindTooltip("Metrô: Central → Samambaia",{direction: "auto"});
+					}					
+				}, 21000*i);
+			}
+			
+			
+/*
+            var tram_VLT_W3_up = L.Marker.movingMarker(coordinates_VLT_W3_up, times_VLT_W3_up, {autostart: true, loop: true, icon: tramIcon}).addTo(Mapa_BSB_Rail);
+            var tram_VLT_W3_down = L.Marker.movingMarker(coordinates_VLT_W3_down, times_VLT_W3_down, {autostart: true, loop: true, icon: tramIcon}).addTo(Mapa_BSB_Rail);
+            var tram_VLT_aero_up = L.Marker.movingMarker(coordinates_VLT_aero_up, times_VLT_aero_up, {autostart: true, loop: true, icon: tramIcon}).addTo(Mapa_BSB_Rail);
+            var tram_VLT_aero_down = L.Marker.movingMarker(coordinates_VLT_aero_down, times_VLT_aero_down, {autostart: true, loop: true, icon: tramIcon}).addTo(Mapa_BSB_Rail);
 
             var trem_metro_verde_up = L.Marker.movingMarker(coordinates_metro_verde_up, times_metro_verde_up, {autostart: true, loop: true, icon: metroIcon}).addTo(Mapa_BSB_Rail);
             var trem_metro_verde_down = L.Marker.movingMarker(coordinates_metro_verde_down, times_metro_verde_down, {autostart: true, loop: true, icon: metroIcon}).addTo(Mapa_BSB_Rail);
@@ -160,3 +218,4 @@
 			trem_metro_verde_down.bindTooltip("Metrô: Central → Ceilândia",{direction: "auto"});	
 
 
+*/
