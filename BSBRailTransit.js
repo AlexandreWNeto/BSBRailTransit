@@ -186,7 +186,7 @@
 			const trains_verde = [1, 2, 4, 5, 7, 8, 10, 11]
 			const trains_laranja = [3, 6, 9, 12]
 			
-			for (let i=0; i<8; i++){
+			for (let i=0; i<9; i++){
 				if ((i+1)%3!=0){
 					setTimeout(function(){
 							trem_metro_verde_up[i] = L.Marker.movingMarker(coordinates_metro_verde_up, times_metro_verde_up, {loop: true, icon: metroIcon}).addTo(Mapa_BSB_Rail);
