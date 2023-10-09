@@ -2,7 +2,9 @@
 A dynamic visualisation of Brasília's current (and possibly future) Rail Transit system
 
 
-Visualisation of trains in the Brasília Rail Transit system: https://alexandrewneto.github.io/BSBRailTransit/
+Link to the dynamic visualisation: https://alexandrewneto.github.io/BSBRailTransit/
+
+![image](https://github.com/AlexandreWNeto/BSBRailTransit/assets/29670261/07dcda1c-41a3-42a5-b163-40226c46cd96)
 
 Sources:
 - Moving Marker script (https://github.com/ewoken/Leaflet.MovingMarker)
