@@ -7,6 +7,8 @@ with open("metrodf.geojson") as f:
 
 
 if __name__ == '__main__':
+
+
     m = folium.Map(location=(-15.835545964034853, -47.991309216590565), zoom_start=12,min_zoom=10,
                    min_lat=-16.053137204879715, max_lat=-15.483138831894765,
                    min_lon=-48.236550163323095, max_lon= -47.35429081565683,
@@ -25,5 +27,5 @@ if __name__ == '__main__':
 
             folium.PolyLine(swapped_coords, color=colour, weight=line_thickness, opacity=1).add_to(m)
 
-    m.save("index.html")
+    m.save("mapa1.html")
     print("A")
